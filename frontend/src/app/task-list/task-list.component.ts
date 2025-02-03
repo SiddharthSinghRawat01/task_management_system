@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TaskService } from '../services/task.service';
 import { Task } from '../models/task.model';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-task-list',
@@ -15,9 +16,10 @@ export class TaskListComponent {
   loading = true;
   error = '';
 
-  constructor(private taskService: TaskService) {}
+  constructor(private taskService: TaskService, private authService: AuthService) {}
 
   ngOnInit(): void {
+    this.authService.checkAuthStatus();
     this.loadTasks();
   }
 

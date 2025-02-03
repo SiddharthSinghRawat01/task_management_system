@@ -1,4 +1,4 @@
-<div class="register-container">
+<div class="form-container">
   <h2>Register</h2>
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
@@ -33,6 +33,6 @@
   </form>
 
   <p class="login-link">
-    Already have an account? <a routerLink="/login">Login here</a>
+    Already have an account? <a (click)="navigateToLogin()" style="cursor: pointer;">Login here</a>
   </p>
 </div>

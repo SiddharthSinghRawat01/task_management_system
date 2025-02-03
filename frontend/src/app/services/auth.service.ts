@@ -33,7 +33,7 @@ export class AuthService {
     removeItem: (key: string) => void 
   } {
     if (isPlatformBrowser(this.platformId)) {
-      return localStorage;
+      return sessionStorage;
     }
     return {
       getItem: (key: string) => this.authToken,
@@ -46,40 +46,40 @@ export class AuthService {
     return this.isAuthenticatedSubject.value;
   }
 
-  private checkAuthStatus(): void {
-    const token = localStorage.getItem('authToken');
+  checkAuthStatus(): void {
+    const token = this.getStorage().getItem('authToken');
     this.isAuthenticatedSubject.next(!!token);
   }
 
   login(token: string): void {
-    localStorage.setItem('authToken', token);
+    this.getStorage().setItem('authToken', token);
     this.isAuthenticatedSubject.next(true);
     this.router.navigate(['/tasks']);
   }
 
   logout(): void {
-    localStorage.removeItem('authToken');
+    this.getStorage().removeItem('authToken');
     this.isAuthenticatedSubject.next(false);
     this.router.navigate(['/login']);
   }
 
   getToken(): string | null {
-    return localStorage.getItem('authToken');
+    return this.getStorage().getItem('authToken');
   }
 
   authenticate(email: string, password: string): Observable<{token: string}> {
-    return this.http.post<{token: string}>('/api/auth/login', { email, password });
+    return this.http.post<{token: string}>('http://localhost:5000/api/auth/login', { email, password });
   }
 
   register(username: string, email: string, password: string): Observable<RegisterResponse> {
-    return this.http.post<RegisterResponse>('/api/auth/register', {
+    return this.http.post<RegisterResponse>('http://localhost:5000/api/auth/register', {
       username,
       email,
       password
     }).pipe(
       tap(response => {
         if (response.token) {
-          this.login(response.token);
+          this.router.navigate(['/login']);
         }
       })
     );

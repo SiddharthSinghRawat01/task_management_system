@@ -1,11 +1,17 @@
 const asyncHandler = require('express-async-handler');
 const Task = require('../models/Task');
 
+// @desc    Get tasks
+// @route   GET /api/tasks
+// @access  Private
 const getTasks = asyncHandler(async (req, res) => {
-  const tasks = await Task.find();
+  const tasks = await Task.find({ user: req.user.id });
   res.status(200).json(tasks);
 });
 
+// @desc    Create task
+// @route   POST /api/tasks
+// @access  Private
 const createTask = asyncHandler(async (req, res) => {
   const { title, description } = req.body;
 
@@ -23,6 +29,9 @@ const createTask = asyncHandler(async (req, res) => {
   res.status(201).json(task);
 });
 
+// @desc    Update task
+// @route   PUT /api/tasks/:id
+// @access  Private
 const updateTask = asyncHandler(async (req, res) => {
   const task = await Task.findById(req.params.id);
 
@@ -46,6 +55,9 @@ const updateTask = asyncHandler(async (req, res) => {
   res.status(200).json(updatedTask);
 });
 
+// @desc    Delete task
+// @route   DELETE /api/tasks/:id
+// @access  Private
 const deleteTask = asyncHandler(async (req, res) => {
   const task = await Task.findById(req.params.id);
 

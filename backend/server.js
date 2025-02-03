@@ -13,10 +13,10 @@ connectDB();
 const app = express();
 
 // Middleware
-app.use(cors({ origin: 'http://localhost:4200', credentials: true })); 
-app.use(express.json());
+app.use(cors());
 
 // Routes
+app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/tasks', taskRoutes);
 

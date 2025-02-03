@@ -1,22 +1,21 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
+  imports: [FormsModule, ReactiveFormsModule, CommonModule],
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrl: './register.component.scss'
 })
 export class RegisterComponent {
   registerForm: FormGroup;
-  errorMessage: string = '';
+  errorMessage: string | null = null;
 
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router
-  ) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.registerForm = this.fb.group({
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -25,19 +24,21 @@ export class RegisterComponent {
   }
 
   onSubmit() {
-    if (this.registerForm.invalid) {
-      return;
+    if (this.registerForm.valid) {
+      const { username, email, password } = this.registerForm.value;
+      this.authService.register(username, email, password).subscribe({
+        next: (response) => {
+          this.router.navigate(['/tasks']);
+        },
+        error: (err) => {
+          this.errorMessage = err.error.message || 'Registration failed';
+        }
+      });
+    } else {
+      this.errorMessage = 'Please fill out the form correctly.';
     }
-
-    const { username, email, password } = this.registerForm.value;
-    
-    this.authService.register(username, email, password).subscribe({
-      next: () => {
-        this.router.navigate(['/tasks']);
-      },
-      error: (err) => {
-        this.errorMessage = err.error.message || 'Registration failed';
-      }
-    });
+  }
+  navigateToLogin() {
+    this.router.navigate(['/login']);
   }
 }
