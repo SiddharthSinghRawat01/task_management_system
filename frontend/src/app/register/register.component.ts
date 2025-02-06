@@ -38,7 +38,4 @@ export class RegisterComponent {
       this.errorMessage = 'Please fill out the form correctly.';
     }
   }
-  navigateToLogin() {
-    this.router.navigate(['/login']);
-  }
 }

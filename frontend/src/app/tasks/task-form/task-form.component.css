@@ -1,0 +1,83 @@
+.task-form-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #f8f9fa; /* Softer background color */
+  border-radius: 8px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1); /* Slightly stronger shadow */
+}
+
+.task-form {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem; /* Increased padding inside the form */
+  background-color: #fff; /* White form background */
+  border-radius: 8px;
+}
+
+.form-group {
+  margin-bottom: 1.5rem; /* Increased spacing between form groups */
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.7rem; /* Slightly more space below labels */
+  font-weight: 500; /* Medium font weight for labels */
+  color: #555; /* Darker label text */
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.75rem 1rem; /* Increased padding for inputs */
+  border: 1px solid #ccc; /* Lighter border for inputs */
+  border-radius: 6px; /* More rounded input corners */
+  font-size: 1rem;
+  background-color: #fefefe; /* Very light background for inputs */
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.06); /* Subtle inner shadow */
+}
+
+.form-control:focus {
+  border-color: #007bff; /* Highlight color on focus */
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25); /* Focus ring */
+}
+
+textarea.form-control {
+  resize: vertical;
+  min-height: 120px; /* Slightly taller textarea */
+}
+
+.error-message {
+  color: #dc3545;
+  font-size: 0.9rem;
+  margin-top: 0.5rem; /* Slightly more space for error messages */
+}
+
+.btn {
+  padding: 0.75rem 1.5rem; /* Increased button padding */
+  border: none;
+  border-radius: 6px; /* More rounded button corners */
+  cursor: pointer;
+  font-size: 1.1rem; /* Slightly larger button font */
+  font-weight: 500; /* Medium font weight for buttons */
+  transition: background-color 0.2s ease, transform 0.2s ease; /* Smooth transitions */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Button shadow */
+}
+
+.btn-primary {
+  background-color: #007bff; /* Primary button color */
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+  transform: scale(1.02); /* Slight scale up on hover */
+  box-shadow: 0 3px 6px rgba(0,0,0,0.15); /* Increased shadow on hover */
+}
+
+.btn-primary:disabled {
+  background-color: #ccc; /* Grayed out for disabled state */
+  color: #666;
+  cursor: not-allowed;
+  box-shadow: none; /* No shadow for disabled state */
+}

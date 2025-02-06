@@ -1,0 +1,36 @@
+<div class="task-list-container">
+  <div *ngIf="loading" class="loading">Loading tasks...</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <label for="statusFilter">Filter by Status:</label>
+  <select id="statusFilter" [(ngModel)]="selectedStatus" (change)="loadTasksByStatus(selectedStatus)">
+    <option value="all">All</option>
+    <option value="pending">Pending</option>
+    <option value="in progress">In progress</option>
+    <option value="completed">Completed</option>
+  </select>
+
+  <div class="task-list">
+    <div *ngFor="let task of tasks" class="task-item">
+      <div class="task-header">
+        <h3>{{ task.title }}</h3>
+        <button (click)="deleteTask(task._id)" class="delete-btn">Delete</button>
+        <button (click)="editTask(task)" class="edit-btn">Edit</button>
+      </div>
+      <p>{{ task.description }}</p>
+      <div class="task-meta">
+        <span class="status" [ngClass]="{'completed': task.status === 'completed'}">
+          Status: {{ task.status }}
+        </span>
+        <select [(ngModel)]="task.status" (change)="updateTaskStatus(task)">
+          <option value="pending">Pending</option>
+          <option value="in progress">in progress</option>
+          <option value="completed">Completed</option>
+        </select>
+        <span class="date">Created: {{ task.createdAt | date:'medium' }}</span>
+<span class="date">Due: {{ task.dueDate ? formatDueDate(task.dueDate) : 'No due date' }}</span>
+      </div>
+    </div>
+    <app-task-form *ngIf="editingTask" [task]="editingTask" (formSubmit)="updateTask($event)" (cancel)="cancelEdit()"></app-task-form>
+  </div>
+</div>
